@@ -72,9 +72,7 @@ export default Vue.extend({
         //  1. 登录成功，记录登录状态，状态需要能够全局访问（放到 Vuex 容器中）
         this.$store.commit('setUser', data.content)
         //  2. 在访问页面时校验登录状态（路由拦截）
-        this.$router.push({
-          name: 'home'
-        })
+        this.$router.push(this.$route.query.redirect as string || '/')
         this.$message.success('登录成功')
       } catch (e) {
         console.error(e)

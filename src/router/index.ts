@@ -77,9 +77,13 @@ const router = new VueRouter({
 // next : 通行的标志
 router.beforeEach((to, from, next) => {
   // 校验登录状态
-  if (to.meta?.requiresAuth && !store.state.user) {
+  if (to.matched.some(({ meta }) => meta.requiresAuth) && !store.state.user) {
     return next({
-      name: 'login'
+      name: 'login',
+      query: {
+        // 把登录成功的
+        redirect: to.fullPath
+      }
     })
   }
   next()
