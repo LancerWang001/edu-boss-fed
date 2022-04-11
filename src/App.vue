@@ -2,7 +2,6 @@
   <div id="app">
     <!-- 根路由的出口 -->
     <router-view/>
-    <p class="text">Hello world</p>
   </div>
 </template>
 
