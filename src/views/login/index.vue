@@ -28,17 +28,16 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import qs from 'qs'
 import { Form } from 'element-ui'
-import request from '@/utils/request'
+import { login } from '@/services/user'
 
 export default Vue.extend({
   name: 'LoginIndex',
   data () {
     return {
       form: {
-        phone: '',
-        password: ''
+        phone: '18201288771',
+        password: '111111'
       },
       rules: {
         phone: [
@@ -54,11 +53,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    /**
-     * 测试账号：
-     *  id： 18201288771
-     *  pwd： 111111
-     */
     async onSubmit () {
       try {
         // 1. 表单验证
@@ -68,20 +62,16 @@ export default Vue.extend({
         this.isLoading = true
 
         // 2. 验证通过 -> 提交表单
-        const { data } = await request({
-          method: 'POST',
-          url: '/front/user/login',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          data: qs.stringify(this.form)
-        })
+        const { data } = await login(this.form)
         // 3. 处理请求结果
-        //    失败：给出提示
+        // 失败：给出提示
         if (data.state !== 1) {
           return this.$message.error(data.message)
         }
-        //    成功：跳转到首页
+        // 成功：跳转到首页
+        //  1. 登录成功，记录登录状态，状态需要能够全局访问（放到 Vuex 容器中）
+        this.$store.commit('setUser', data.content)
+        //  2. 在访问页面时校验登录状态（路由拦截）
         this.$router.push({
           name: 'home'
         })

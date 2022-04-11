@@ -7,14 +7,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import request from '@/utils/request'
-
-request({
-  method: 'GET',
-  url: '/boss/v2/api-docs?group=edu-boss-boot'
-}).then((r) => {
-  console.log(r)
-})
 
 export default Vue.extend({
   name: 'App'
@@ -22,7 +14,6 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-// @import '~@/styles/variables.scss';
 .text {
   color: $warning-color;
 }
