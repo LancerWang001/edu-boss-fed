@@ -1,11 +1,15 @@
 <template>
-  <div>
-    <h1>头部</h1>
-    <h2>侧边栏</h2>
-
-    <!-- 子路由出口 -->
-    <router-view />
-  </div>
+  <el-container>
+    <el-aside width="200px">Aside</el-aside>
+    <el-container>
+      <el-header>Header</el-header>
+      <el-main>
+        Main
+        <!-- 子路由出口 -->
+        <router-view />
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
 
 <script lang="ts">
@@ -16,6 +20,21 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.el-container {
+  min-height: 100vh;
+  min-width: 980px;
+}
 
+.el-aside {
+  background: #d3dce6;
+}
+
+.el-header {
+  background: #b3c0d1;
+}
+
+.el-main {
+  background: #e9eef3;
+}
 </style>
