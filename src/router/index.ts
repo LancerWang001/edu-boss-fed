@@ -72,7 +72,7 @@ const router = new VueRouter({
 })
 
 // 全局前置守卫
-// to : 要去哪里打路由信息
+// to : 要去哪里的路由信息
 // from : 从哪里来的路由信息
 // next : 通行的标志
 router.beforeEach((to, from, next) => {
