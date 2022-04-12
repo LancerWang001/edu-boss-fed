@@ -1,14 +1,16 @@
 <template>
   <div>
-    资源管理
+    <resource-list></resource-list>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import ResourceList from './components/List.vue'
 
 export default Vue.extend({
-  name: 'ResourceIndex'
+  name: 'ResourceIndex',
+  components: { ResourceList }
 })
 </script>
 
