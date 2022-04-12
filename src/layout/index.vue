@@ -8,7 +8,6 @@
         <app-header />
       </el-header>
       <el-main>
-        Main
         <!-- 子路由出口 -->
         <router-view />
       </el-main>
