@@ -1,14 +1,16 @@
 <template>
-  <div>
-    资源管理
+  <div class="role">
+    <role-list></role-list>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import RoleList from './components/RoleList.vue'
 
 export default Vue.extend({
-  name: 'RoleIndex'
+  name: 'RoleIndex',
+  components: { RoleList }
 })
 </script>
 
