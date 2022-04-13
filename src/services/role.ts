@@ -22,3 +22,28 @@ export const getRole = (id: string): Promise<any> => request({
   method: 'GET',
   url: `/boss/role/${id}`
 })
+
+// 获取所有角色
+export const getAllRoles = (): Promise<any> => request({
+  method: 'GET',
+  url: '/boss/role/all'
+})
+
+// 给用户分配角色
+export const allocateUserRoles = (
+  userId: number | string,
+  roleIdList: number[]
+): Promise<any> => request({
+  method: 'POST',
+  url: '/boss/role/allocateUserRoles',
+  data: {
+    userId,
+    roleIdList
+  }
+})
+
+// 查询用户角色
+export const getRoleByUser = (userId: string): Promise<any> => request({
+  method: 'GET',
+  url: `/boss/role/user/${userId}`
+})

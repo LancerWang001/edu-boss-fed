@@ -20,7 +20,7 @@ export const login = (data: LoginData): Promise<any> => request({
 })
 
 // 刷新 token
-export const refreshToken = () => axios.create()({
+export const refreshToken = (): Promise<any> => axios.create()({
   method: 'POST',
   url: '/front/user/refresh_token',
   data: qs.stringify({
@@ -30,7 +30,14 @@ export const refreshToken = () => axios.create()({
 })
 
 // 获取用户信息
-export const getUserInfo = () => request({
+export const getUserInfo = (): Promise<any> => request({
   method: 'GET',
   url: '/front/user/getInfo'
+})
+
+// 分页查询用户信息
+export const getUserPages = (data: Record<string, any>): Promise<any> => request({
+  method: 'POST',
+  url: '/boss/user/getUserPages',
+  data
 })
