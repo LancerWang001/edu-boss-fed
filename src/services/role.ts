@@ -16,3 +16,9 @@ export const saveOrUpdateRole = (data: Record<string, any>): Promise<any> => req
   url: '/boss/role/saveOrUpdate',
   data
 })
+
+// 获取角色
+export const getRole = (id: string): Promise<any> => request({
+  method: 'GET',
+  url: `/boss/role/${id}`
+})

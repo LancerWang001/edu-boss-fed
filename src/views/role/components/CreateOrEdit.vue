@@ -21,10 +21,20 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Form } from 'element-ui'
-import { saveOrUpdateRole } from '@/services/role'
+import { getRole, saveOrUpdateRole } from '@/services/role'
 
 export default Vue.extend({
   name: 'CreateOrEditRole',
+  props: {
+    roleId: {
+      type: [String, Number],
+      default: ''
+    },
+    isEdit: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       form: {
@@ -39,18 +49,24 @@ export default Vue.extend({
       isLoading: false
     }
   },
+  created () {
+    // 如果是编辑操作，则根据 roleId 获取角色信息
+    if (this.isEdit) {
+      this.loadRole()
+    }
+  },
   methods: {
-    onCancel () {
-      (this.$refs.form as Form).resetFields()
+    async loadRole () {
+      const { data } = await getRole(this.roleId as string)
+      this.form = data.data
     },
     async onSubmit () {
       try {
         this.isLoading = true
         await (this.$refs.form as Form).validate()
         await saveOrUpdateRole(this.form)
-        this.$message('操作成功')
-        this.$emit('success');
-        (this.$refs.form as Form).resetFields()
+        this.$message.success('操作成功')
+        this.$emit('success')
       } finally {
         this.isLoading = false
       }

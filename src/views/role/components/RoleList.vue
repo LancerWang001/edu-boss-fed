@@ -12,7 +12,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <el-button :disabled="isLoading" @click="dialogVisible = true">添加角色</el-button>
+      <el-button :disabled="isLoading" @click="handleAdd">添加角色</el-button>
       <el-divider></el-divider>
       <el-table :data="roles" v-loading="isLoading">
         <el-table-column
@@ -32,14 +32,19 @@
           prop="createdTime"
         ></el-table-column>
         <el-table-column label="操作">
-          <div>
-            <el-button type="text">分配菜单</el-button>
-            <el-button type="text">分配资源</el-button>
-          </div>
-          <div>
-            <el-button type="text">编辑</el-button>
-            <el-button type="text">删除</el-button>
-          </div>
+          <template slot-scope="scope">
+            <div>
+              <el-button
+                type="text"
+                @click="$router.push({ name: 'alloc-menu', params: { roleId: scope.row.id } })"
+              >分配菜单</el-button>
+              <el-button type="text">分配资源</el-button>
+            </div>
+            <div>
+              <el-button type="text" @click="onEditRole(scope.row)">编辑</el-button>
+              <el-button type="text">删除</el-button>
+            </div>
+          </template>
         </el-table-column>
       </el-table>
     </el-card>
@@ -48,14 +53,19 @@
       :visible.sync="dialogVisible"
       width="30%"
       :before-close="handleClose">
-      <create-or-edit-role @cancel="dialogVisible = false" @success="dialogVisible = false"/>
+      <create-or-edit-role
+        v-if="dialogVisible"
+        :isEdit="isEdit"
+        :roleId="roleId"
+        @cancel="dialogVisible = false"
+        @success="handleSuccess"
+      />
     </el-dialog>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { Form } from 'element-ui'
 import CreateOrEditRole from './CreateOrEdit.vue'
 import { getRolePages } from '@/services/role'
 
@@ -69,7 +79,9 @@ export default Vue.extend({
         name: ''
       },
       roles: [],
-      isLoading: false
+      isLoading: false,
+      roleId: null,
+      isEdit: false
     }
   },
 
@@ -96,7 +108,19 @@ export default Vue.extend({
       this.loadRoles()
     },
     onReset () {
-      (this.$refs.form as Form).resetFields()
+      this.loadRoles()
+    },
+    onEditRole (row: Record<string, any>) {
+      this.dialogVisible = true
+      this.roleId = row.id
+      this.isEdit = true
+    },
+    handleAdd () {
+      this.isEdit = false
+      this.dialogVisible = false
+    },
+    handleSuccess () {
+      this.dialogVisible = false
       this.loadRoles()
     }
   }
