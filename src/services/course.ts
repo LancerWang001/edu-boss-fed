@@ -33,6 +33,27 @@ export const getCourseById = (courseId: string): Promise<any> => request({
   params: { courseId }
 })
 
+// 更新课程阶段
+export const saveOrUpdateSection = (id: string, orderNum: number): Promise<any> => request({
+  method: 'POST',
+  url: '/boss/course/section/saveOrUpdateSection',
+  data: { id, orderNum }
+})
+
+// 更新课程课时
+export const saveOrUpdateLesson = (id: string, orderNum: number): Promise<any> => request({
+  method: 'POST',
+  url: '/boss/course/lesson/saveOrUpdate',
+  data: { id, orderNum }
+})
+
+// 根据课程id获取指定课程章节信息
+export const getSectionById = (courseId: string): Promise<any> => request({
+  method: 'GET',
+  url: '/boss/course/section/getSectionAndLesson',
+  params: { courseId }
+})
+
 // 上传图片
 export const upload = (
   data: FormData,
