@@ -20,7 +20,18 @@
           </span>
           <span v-else class="actions">
             <el-button size="mini">编辑</el-button>
-            <el-button size="mini" type="success">上传视频</el-button>
+            <el-button
+              size="mini"
+              type="success"
+              @click="$router.push({
+                name: 'course-video',
+                params: { courseId },
+                query: {
+                  sectionId: node.parent.id,
+                  lessonId: data.id
+                }
+              })"
+            >上传视频</el-button>
             <el-button size="mini">状态</el-button>
           </span>
         </div>
