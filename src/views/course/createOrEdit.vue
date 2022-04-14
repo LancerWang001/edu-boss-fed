@@ -46,7 +46,7 @@ import CourseCover from './components/CourseCover.vue'
 import SellMessage from './components/SellMessage.vue'
 import Sale from './components/Sale.vue'
 import CourseDetail from './components/CourseDetail.vue'
-import { saveOrUpdateCourse } from '@/services/course'
+import { saveOrUpdateCourse, getCourseById } from '@/services/course'
 
 export default Vue.extend({
   name: 'CourseCreate',
@@ -56,6 +56,14 @@ export default Vue.extend({
     SellMessage,
     Sale,
     CourseDetail
+  },
+  props: {
+    courseId: {
+      type: [String, Number]
+    }
+  },
+  created () {
+    if (this.courseId) this.loadCourse()
   },
   data () {
     return {
@@ -112,17 +120,52 @@ export default Vue.extend({
     }
   },
   methods: {
+    async loadCourse () {
+      const { data } = await getCourseById(this.courseId as string)
+      const courseData = data.data
+      this.basicInfo = {
+        courseName: courseData.courseName,
+        brief: courseData.brief,
+        teacherDTO: courseData.teacherDTO,
+        sortNum: courseData.sortNum,
+        previewFirstField: courseData.previewFirstField,
+        previewSecondField: courseData.previewSecondField
+      }
+      this.courseCover = {
+        courseListImg: courseData.courseListImg,
+        courseImgUrl: courseData.courseImgUrl
+      }
+      this.sellMessage = {
+        price: courseData.price,
+        discounts: courseData.discounts,
+        sales: courseData.sales,
+        discountsTag: courseData.discountsTag
+      }
+      this.sale = {
+        activityCourse: courseData.activityCourse,
+        activityCourseDTO: courseData.activityCourseDTO
+      }
+      this.courseDetail = {
+        courseDescriptionMarkDown: courseData.courseDescriptionMarkDown,
+        status: courseData.status
+      }
+      this.course = {
+        priceTag: courseData.priceTag,
+        isNew: courseData.isNew,
+        isNewDes: courseData.isNewDes,
+        autoOnlineTime: courseData.autoOnlineTime
+      }
+    },
     async onSubmit () {
-      // await saveOrUpdateCourse({
-      //   ...this.basicInfo,
-      //   ...this.courseCover,
-      //   ...this.sellMessage,
-      //   ...this.sale,
-      //   ...this.courseDetail,
-      //   ...this.course
-      // })
-      // this.$router.back()
-      console.log(this.courseDetail)
+      await saveOrUpdateCourse({
+        ...this.basicInfo,
+        ...this.courseCover,
+        ...this.sellMessage,
+        ...this.sale,
+        ...this.courseDetail,
+        ...this.course
+      })
+      this.$router.back()
     }
   }
 })

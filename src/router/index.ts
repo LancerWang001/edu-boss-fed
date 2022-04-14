@@ -80,9 +80,12 @@ const routes: Array<RouteConfig> = [
         props: true // 将路由路径参数映射到组件的 props 中
       },
       {
-        path: '/course/create',
-        name: 'course-create',
-        component: () => import(/* webpackChunkName: 'course-create' */ '@/views/course/create.vue')
+        path: '/course/create-edit/:courseId?',
+        name: 'course-create-edit',
+        component: () => import(
+          /* webpackChunkName: 'course-create-edit' */ '@/views/course/createOrEdit.vue'
+        ),
+        props: true
       }
     ]
   }

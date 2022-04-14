@@ -28,7 +28,7 @@
         <el-button
           type="primary"
           size="small"
-          @click="$router.push({ name: 'course-create' })"
+          @click="$router.push({ name: 'course-create-edit' })"
         >添加课程</el-button>
       </div>
       <el-table :data="courseTable" v-loading="isLoading">
@@ -67,8 +67,15 @@
         <el-table-column
           label="操作"
         >
-          <el-button>编辑</el-button>
-          <el-button>内容管理</el-button>
+          <template slot-scope="scope">
+            <el-button
+              @click="$router.push({
+                name: 'course-create-edit',
+                params: { courseId: scope.row.id }
+              })"
+            >编辑</el-button>
+            <el-button>内容管理</el-button>
+          </template>
         </el-table-column>
       </el-table>
       <br>

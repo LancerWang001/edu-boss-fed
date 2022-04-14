@@ -26,6 +26,13 @@ export const saveOrUpdateCourse = (data: Record<string, any>): Promise<any> => r
   data
 })
 
+// 通过课程Id获取课程信息
+export const getCourseById = (courseId: string): Promise<any> => request({
+  method: 'GET',
+  url: '/boss/course/getCourseById',
+  params: { courseId }
+})
+
 // 上传图片
 export const upload = (
   data: FormData,
