@@ -4,6 +4,7 @@
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
+      :default-active="$route.path"
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b"
